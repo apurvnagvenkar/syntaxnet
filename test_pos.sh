@@ -37,8 +37,8 @@ CONLL2TREE=${BINDIR}/conll2tree
 
 #MODEL_DIR=${CDIR}/models
 
-MODEL_DIR=/home/versionx/models/research/syntaxnet/work/eagles_pos.0506/models
-
+#MODEL_DIR=/home/versionx/models/research/syntaxnet/work/eagles_pos.0506/models
+MODEL_DIR=${CDIR}/train_model/models
 CONTEXT=${MODEL_DIR}/context.pbtxt
 cat ${CONTEXT}.template | sed "s=OUTPATH=${MODEL_DIR}=" > ${MODEL_DIR}/context
 CONTEXT=${MODEL_DIR}/context
