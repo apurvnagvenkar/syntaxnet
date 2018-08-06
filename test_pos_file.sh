@@ -1,6 +1,13 @@
 #!/bin/bash
 
+# A script that runs a tokenizer, a part-of-speech tagger and a dependency
+# parser on an English text file, with one sentence per line.
+#
+# Example usage:
+#  echo "Parsey McParseface is my favorite parser!" | syntaxnet/demo.sh
+
 # To run on a conll formatted file, add the --conll command line argument.
+#
 
 # code from http://stackoverflow.com/a/1116890
 function readlink()
@@ -34,38 +41,22 @@ BINDIR=${SYNTAXNET_HOME}/bazel-bin/syntaxnet
 
 PARSER_EVAL=${BINDIR}/parser_eval
 CONLL2TREE=${BINDIR}/conll2tree
-
-#MODEL_DIR=${CDIR}/models
-
-#MODEL_DIR=/home/versionx/models/research/syntaxnet/work/eagles_pos.0506/models
-MODEL_DIR=${CDIR}/wiki.train_model/models
-CONTEXT=${MODEL_DIR}/context.pbtxt
-cat ${CONTEXT}.template | sed "s=OUTPATH=${MODEL_DIR}=" > ${MODEL_DIR}/context
-CONTEXT=${MODEL_DIR}/context
+MODEL_DIR=${CDIR}/train_model/models1
 TAGGER_MODEL_PATH=${MODEL_DIR}/tagger-params/model
-PARSER_MODEL_PATH=${MODEL_DIR}/parser-params/model
-XTAGGER_MODEL_PATH=${MODEL_DIR}/tagger-params
-XPARSER_MODEL_PATH=${MODEL_DIR}/parser-params
 TAGGER_MODEL_PATH=${TAGGER_MODEL_PATH}
-PARSER_MODEL_PATH=${PARSER_MODEL_PATH}
+#MODEL_DIR=/home/versionx/apurv/tensorflow/models/research/syntaxnet/work/train_model
 
-TAGGER_HIDDEN_LAYER_SIZES=64
-
-PARSER_HIDDEN_LAYER_SIZES=512,512
-BATCH_SIZE=256
-BEAM_SIZE=16
-
-[[ "$1" == "--conll" ]] && INPUT_FORMAT=stdin-conll || INPUT_FORMAT=stdin
-
+#[[ "$1" == "--conll" ]] && INPUT_FORMAT=stdin-conll || INPUT_FORMAT=stdin
+INPUT_FORMAT=MAIN-IN
 ${PARSER_EVAL} \
   --input=${INPUT_FORMAT} \
   --output=stdout-conll \
-  --hidden_layer_sizes=${TAGGER_HIDDEN_LAYER_SIZES} \
+  --hidden_layer_sizes=64 \
   --arg_prefix=brain_tagger \
-  --graph_builder=greedy \
-  --task_context=${CONTEXT} \
-  --resource_dir=${MODEL_DIR} \
+  --graph_builder=structured \
+  --task_context=${MODEL_DIR}/context.pbtxt \
   --model_path=${TAGGER_MODEL_PATH} \
   --slim_model \
-  --batch_size=${BATCH_SIZE} \
-  --alsologtostderr 
+  --batch_size=1024 \
+  --alsologtostderr \
+

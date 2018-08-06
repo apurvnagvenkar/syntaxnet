@@ -42,6 +42,7 @@ BINDIR=${SYNTAXNET_HOME}/bazel-bin/syntaxnet
 PARSER_EVAL=${BINDIR}/parser_eval
 CONLL2TREE=${BINDIR}/conll2tree
 MODEL_DIR=${SYNTAXNET_HOME}/syntaxnet/models/parsey_mcparseface
+#MODEL_DIR=/home/versionx/apurv/tensorflow/models/research/syntaxnet/work/train_model
 
 #[[ "$1" == "--conll" ]] && INPUT_FORMAT=stdin-conll || INPUT_FORMAT=stdin
 INPUT_FORMAT=MAIN-IN

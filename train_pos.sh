@@ -133,7 +133,9 @@ python=/usr/bin/python
 SYNTAXNET_HOME=${PDIR}
 BINDIR=$SYNTAXNET_HOME/bazel-bin/syntaxnet
 
-CORPUS_DIR=${CDIR}/train_model
+#CORPUS_DIR=${CDIR}/train_model
+#CORPUS_DIR=${CDIR}/wiki.train_model
+CORPUS_DIR=${CDIR}/wiki_test
 
 CONTEXT=${CORPUS_DIR}/context.pbtxt
 TMP_DIR=${CORPUS_DIR}/tmp/syntaxnet-output
